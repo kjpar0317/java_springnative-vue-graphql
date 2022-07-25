@@ -1,0 +1,21 @@
+type Query {
+	codes: [Code]
+}
+
+type Mutation {
+	login(id: String!, password: String!): Login
+}
+ 
+type Login {
+	userId: String
+	token: String
+}
+ 
+type Code {
+	CId: ID
+	CParentId: String
+	CName: String
+	CDescription: String
+	CEngName: String
+}
+

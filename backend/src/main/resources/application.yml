@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: jersey
+  profiles:
+    active: local
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: "jdbc:mariadb://127.0.0.1:3306/test"
+    username: test
+    password: test
+    hikari:
+      auto-commit: false
+      connection-test-query: SELECT 1
+      minimum-idle: 10
+      maximum-pool-size: 50
+      pool-name: pkj
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    show-sql: true
+
+token:
+  header-name: "Authorization"
+  prefix: "Bearer "
+  secret-password: "test"
+  duration-ms: 3600000
