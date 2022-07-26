@@ -3,7 +3,6 @@ package com.example.demo.repository;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Users;

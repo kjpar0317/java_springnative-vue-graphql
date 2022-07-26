@@ -11,7 +11,7 @@ import com.example.demo.service.CodeService;
 import reactor.core.publisher.Flux;
 
 //@TypeHint(types = Code.class, access = {TypeAccess.AUTO_DETECT})
-//@Secured({"ROLE_ADMIN"})
+@Secured({"ROLE_ADMIN"})
 @Controller
 class CodeController {
 	@Autowired
