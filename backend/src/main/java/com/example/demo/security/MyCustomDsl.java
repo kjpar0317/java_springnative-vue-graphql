@@ -7,12 +7,12 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import com.example.demo.security.jwt.JWTAuthorizationFilter;
 
 public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {
-    private TokenUtils tokenUtils;
-    
-    public MyCustomDsl(TokenUtils tokenUtils) {
-    	this.tokenUtils = tokenUtils;
-    }
-	
+	private TokenUtils tokenUtils;
+
+	public MyCustomDsl(TokenUtils tokenUtils) {
+		this.tokenUtils = tokenUtils;
+	}
+
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);

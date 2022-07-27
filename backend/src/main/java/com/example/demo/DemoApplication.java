@@ -8,7 +8,7 @@ import org.springframework.core.NativeDetector;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.nativex.hint.ResourceHint;
 
-@ResourceHint(patterns = {"graphql/schema.graphqls" })
+@ResourceHint(patterns = { "graphql/schema.graphqls" })
 @SpringBootApplication
 public class DemoApplication {
 

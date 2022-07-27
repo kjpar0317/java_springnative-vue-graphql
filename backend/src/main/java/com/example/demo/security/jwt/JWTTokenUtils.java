@@ -11,11 +11,10 @@ import com.example.demo.security.TokenUtils;
 
 @Component
 public class JWTTokenUtils extends TokenUtils {
-    public TokenPayload decodeToken(String authorizationHeader) {
-        DecodedJWT decodedToken = JWT.require(Algorithm.HMAC256(getSecret().getBytes()))
-                .build()
-                .verify(authorizationHeader.replace(getTokenPrefix(), ""));
-        
-        return new TokenPayload(decodedToken.getSubject(), decodedToken.getClaim("role").as(UserEntity.Role.class));
-    }
+	public TokenPayload decodeToken(String authorizationHeader) {
+		DecodedJWT decodedToken = JWT.require(Algorithm.HMAC256(getSecret().getBytes())).build()
+				.verify(authorizationHeader.replace(getTokenPrefix(), ""));
+
+		return new TokenPayload(decodedToken.getSubject(), decodedToken.getClaim("role").as(UserEntity.Role.class));
+	}
 }

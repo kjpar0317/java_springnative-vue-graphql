@@ -20,18 +20,15 @@ public class UserDataService implements UserDetailsService {
 	private UsersRepository userRepo;
 
 	@Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-		return userRepo.getUserByLoginId(id).map(this::createUserDetails).orElseThrow(() -> new UsernameNotFoundException(id + " -> 유저 정보를 찾을 수 없습니다."));
-    }
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+		return userRepo.getUserByLoginId(id).map(this::createUserDetails)
+				.orElseThrow(() -> new UsernameNotFoundException(id + " -> 유저 정보를 찾을 수 없습니다."));
+	}
 
-    // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
-    private UserDetails createUserDetails(Users user) {
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.role());
+	// DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
+	private UserDetails createUserDetails(Users user) {
+		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.role());
 
-        return new User(
-                user.id(),
-                user.password(),
-                Collections.singleton(grantedAuthority)
-        );
-    }
+		return new User(user.id(), user.password(), Collections.singleton(grantedAuthority));
+	}
 }

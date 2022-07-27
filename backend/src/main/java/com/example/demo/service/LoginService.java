@@ -15,9 +15,9 @@ public class LoginService {
 
 	@Autowired
 	private UsersRepository userRepo;
-	
+
 	public Login doLogin(String userId, String passwd) throws NotUserAuthException {
-		return userRepo.getUserByLoginInfo(userId, passwd)
-				.map(m -> new Login(m.id(), tk.build(m.id(), m.role()))).orElseThrow(() -> new NotUserAuthException());
-    }
+		return userRepo.getUserByLoginInfo(userId, passwd).map(m -> new Login(m.id(), tk.build(m.id(), m.role())))
+				.orElseThrow(() -> new NotUserAuthException());
+	}
 }

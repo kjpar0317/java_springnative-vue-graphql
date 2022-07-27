@@ -23,75 +23,74 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
-@Table(name="Users")
+@Table(name = "Users")
 @Data
 @AllArgsConstructor
-@SqlResultSetMapping(
-        name = "UsersMapping",
-        classes = @ConstructorResult(
-            	targetClass = Users.class,
-            columns = { 
-                        @ColumnResult(name = "id", type = String.class), 
-                        @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "password", type = String.class),
-                        @ColumnResult(name = "role", type = String.class)
-            	}
-        	))
+@SqlResultSetMapping(name = "UsersMapping"
+		, classes = @ConstructorResult(
+				targetClass = Users.class, 
+				columns = {
+						@ColumnResult(name = "id"), 
+						@ColumnResult(name = "name"),
+						@ColumnResult(name = "password"), 
+						@ColumnResult(name = "role") 
+					}
+				)
+		)
 public class UserEntity implements UserDetails {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private String id;
 	private String name;
 	private String password;
-	
-    @Transient
-    private Collection<SimpleGrantedAuthority> authorities;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Role role;
+	@Transient
+	private Collection<SimpleGrantedAuthority> authorities;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
-    }
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
-    @Override
-    public String getUsername() {
-        return this.name;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authorities;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	public String getUsername() {
+		return this.name;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-    
-    public enum Role implements GrantedAuthority {
-        NORMAL,
-        ADMIN;
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-        @Override
-        public String getAuthority() {
-            return "ROLE_" + this.name();
-        }
-    }
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	public enum Role implements GrantedAuthority {
+		NORMAL, ADMIN;
+
+		@Override
+		public String getAuthority() {
+			return "ROLE_" + this.name();
+		}
+	}
 }

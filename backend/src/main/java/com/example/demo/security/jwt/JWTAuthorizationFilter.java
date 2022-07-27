@@ -22,41 +22,41 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
-    private TokenUtils tokenUtils;
+	private TokenUtils tokenUtils;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager, TokenUtils tokenUtils) {
-        super(authManager);
-        this.tokenUtils = tokenUtils;
-    }
+	public JWTAuthorizationFilter(AuthenticationManager authManager, TokenUtils tokenUtils) {
+		super(authManager);
+		this.tokenUtils = tokenUtils;
+	}
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest req,
-                                    HttpServletResponse res,
-                                    FilterChain chain) throws IOException, ServletException {
-        String header = req.getHeader(tokenUtils.getHeaderString());
+	@Override
+	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+		String header = req.getHeader(tokenUtils.getHeaderString());
 
-        if (header == null || !header.startsWith(tokenUtils.getTokenPrefix())) {
-            chain.doFilter(req, res);
-            return;
-        }
-        
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
+		if (header == null || !header.startsWith(tokenUtils.getTokenPrefix())) {
+			chain.doFilter(req, res);
+			return;
+		}
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(req, res);
-    }
+		UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(tokenUtils.getHeaderString());
-        if (token != null) {
-            TokenPayload tokenPayload = tokenUtils.decodeToken(token);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		chain.doFilter(req, res);
+	}
 
-            if (tokenPayload.getUsername() != null) {
-                return new UsernamePasswordAuthenticationToken(tokenPayload.getUsername(), null, Collections.singletonList(tokenPayload.getRole()));
-            }
+	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+		String token = request.getHeader(tokenUtils.getHeaderString());
+		if (token != null) {
+			TokenPayload tokenPayload = tokenUtils.decodeToken(token);
 
-            log.error("Valid token contains no user info");
-        }
-        return null;
-    }
+			if (tokenPayload.getUsername() != null) {
+				return new UsernamePasswordAuthenticationToken(tokenPayload.getUsername(), null,
+						Collections.singletonList(tokenPayload.getRole()));
+			}
+
+			log.error("Valid token contains no user info");
+		}
+		return null;
+	}
 }

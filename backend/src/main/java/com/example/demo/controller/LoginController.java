@@ -15,9 +15,10 @@ import reactor.core.publisher.Mono;
 public class LoginController {
 	@Autowired
 	private LoginService service;
-	
+
 	@MutationMapping
-	public Mono<Login> login(@Argument("id") String id, @Argument("password") String password) throws NotUserAuthException {
+	public Mono<Login> login(@Argument("id") String id, @Argument("password") String password)
+			throws NotUserAuthException {
 		return Mono.just(service.doLogin(id, password));
 	}
 }
