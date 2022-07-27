@@ -15,16 +15,15 @@ public class CodeService {
 	private CodeRepository codeRepo;
 
 	public Code fineById(String id) {
-		return codeRepo.findById(id).map(
-				m -> new Code(m.getC_id(), m.getC_parent_id(), m.getC_name(), m.getC_eng_name(), m.getC_description()))
-				.orElse(null);
+		return codeRepo.findById(id).map(this::convertEntityToModel).orElse(null);
 	}
 
 	public List<Code> findAll() {
 		return codeRepo.findAll().stream().map(this::convertEntityToModel).toList();
 	}
-	
+
 	private Code convertEntityToModel(CodeEntity org) {
-		return new Code(org.getC_id(), org.getC_parent_id(), org.getC_name(), org.getC_eng_name(), org.getC_description());
+		return new Code(org.getC_id(), org.getC_parent_id(), org.getC_name(), org.getC_eng_name(),
+				org.getC_description());
 	}
 }
