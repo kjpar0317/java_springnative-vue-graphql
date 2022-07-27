@@ -21,13 +21,7 @@ public class UserDataService implements UserDetailsService {
 
 	@Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-		Users user = userRepo.getUserByLoginId(id);
-		
-		if(user != null) {
-			return createUserDetails(user);
-		}
-
-		throw new UsernameNotFoundException(id + " -> 유저 정보를 찾을 수 없습니다.");
+		return userRepo.getUserByLoginId(id).map(this::createUserDetails).orElseThrow(() -> new UsernameNotFoundException(id + " -> 유저 정보를 찾을 수 없습니다."));
     }
 
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴

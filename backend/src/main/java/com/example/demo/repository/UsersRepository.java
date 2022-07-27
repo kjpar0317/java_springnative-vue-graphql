@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -16,7 +18,7 @@ public class UsersRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Users getUserByLoginInfo(String userId, String passwd) {
+	public Optional<Users> getUserByLoginInfo(String userId, String passwd) {
 		Query query = em.createNativeQuery("""
 				SELECT
 					id, name, password, role
@@ -28,11 +30,11 @@ public class UsersRepository {
 		query.setParameter(1, userId);
 		query.setParameter(2, passwd);
 		
-		return (Users) query.getResultList().stream().findFirst().orElse(null);
+		return query.getResultList().stream().findFirst();
 	}
 	
-    @SuppressWarnings("unchecked")
-	public Users getUserByLoginId(String id) {
+	@SuppressWarnings("unchecked")
+	public Optional<Users> getUserByLoginId(String id) {
 		Query query = em.createNativeQuery("""
 				SELECT
 					id, name, password, role
@@ -43,6 +45,6 @@ public class UsersRepository {
 
 		query.setParameter(1, id);
 		
-		return (Users) query.getResultList().stream().findFirst().orElse(null);
+		return query.getResultList().stream().findFirst();
     }
 }

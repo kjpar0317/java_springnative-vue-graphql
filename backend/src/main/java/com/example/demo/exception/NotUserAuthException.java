@@ -1,8 +1,6 @@
 package com.example.demo.exception;
 
-import graphql.GraphQLException;
-
-public class NotUserAuthException extends GraphQLException {
+public class NotUserAuthException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private static final String ERROR_MSG = "인증되지 않은 유저입니다.";
 
