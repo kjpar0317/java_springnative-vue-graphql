@@ -18,7 +18,7 @@ class CodeController {
 	private CodeService codeService;
 
 	@QueryMapping
-	Flux<Code> codes() {
+	public Flux<Code> codes() {
 		return Flux.fromIterable(codeService.findAll());
 	}
 }
