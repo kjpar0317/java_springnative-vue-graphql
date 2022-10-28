@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,23 @@ public class CodeService {
 		return codeRepo.findById(id).map(this::convertEntityToModel).orElse(null);
 	}
 
+	public Integer getTotal(List<Integer> list, Predicate<Integer> selector) {
+		return list.stream().filter(selector).mapToInt(m -> m).sum();
+	}
+	
+	public Integer getIncrement(Integer num, Function<Integer, Integer> func) {
+		return func.apply(num);
+	}
+	
 	public List<Code> findAll() {
+		Function<Integer, Integer> test = value -> value + 1;
+		
+		List<Integer> list = List.of(1, 4, 2, 5);
+
+		// 테스트 해보자
+		System.out.println(this.getTotal(list, n -> n % 2 == 0));
+		System.out.println(this.getIncrement(list.get(0), test));
+		
 		return codeRepo.findAll().stream().map(this::convertEntityToModel).toList();
 	}
 
