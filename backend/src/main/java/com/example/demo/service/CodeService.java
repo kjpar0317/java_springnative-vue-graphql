@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.CodeEntity;
 import com.example.demo.model.Code;
 import com.example.demo.repository.CodeRepository;
+import com.example.demo.utils.AutoCloseableTest;
+import com.example.demo.utils.LambdaTest;
 
 @Service
 public class CodeService {
@@ -36,6 +38,8 @@ public class CodeService {
 		// 테스트 해보자
 		System.out.println(this.getTotal(list, n -> n % 2 == 0));
 		System.out.println(this.getIncrement(list.get(0), test));
+		LambdaTest.test(t -> t.print().print2());
+		AutoCloseableTest.use(u -> u.print());
 		
 		return codeRepo.findAll().stream().map(this::convertEntityToModel).toList();
 	}
