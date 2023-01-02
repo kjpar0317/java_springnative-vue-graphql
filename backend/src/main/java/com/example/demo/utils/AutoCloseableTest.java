@@ -1,8 +1,9 @@
 package com.example.demo.utils;
 
-import java.util.function.Consumer;
-
 import lombok.extern.slf4j.Slf4j;
+
+import javax.validation.constraints.NotNull;
+import java.util.function.Consumer;
 
 @Slf4j
 public class AutoCloseableTest implements AutoCloseable {
@@ -19,9 +20,9 @@ public class AutoCloseableTest implements AutoCloseable {
 		log.info("closed");
 	}
 	
-	public static void use(Consumer<AutoCloseableTest> block) {
+	public static void use(@NotNull Consumer<AutoCloseableTest> block) {
 		AutoCloseableTest autocloz = new AutoCloseableTest();
-		
+
 		try {
 			block.accept(autocloz);
 		} finally {

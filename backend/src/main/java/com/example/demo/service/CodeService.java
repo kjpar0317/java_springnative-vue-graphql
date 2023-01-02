@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
-import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.example.demo.annotation.CrossConcern;
 import com.example.demo.entity.CodeEntity;
 import com.example.demo.model.Code;
 import com.example.demo.repository.CodeRepository;
 import com.example.demo.utils.AutoCloseableTest;
 import com.example.demo.utils.LambdaTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 @Service
 public class CodeService {
@@ -29,7 +29,9 @@ public class CodeService {
 	public Integer getIncrement(Integer num, Function<Integer, Integer> func) {
 		return func.apply(num);
 	}
-	
+
+
+	@CrossConcern
 	public List<Code> findAll() {
 		Function<Integer, Integer> test = value -> value + 1;
 		
